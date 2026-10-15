@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Music Scratchpad
+Exec=kitty --class scratchpad-music -e ncmpcpp
+Icon=multimedia-audio-player
+NoDisplay=true

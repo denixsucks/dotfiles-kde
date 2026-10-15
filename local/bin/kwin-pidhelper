@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import dbus, dbus.service, dbus.mainloop.glib
+from gi.repository import GLib
+
+
+def parent(pid):
+    with open(f"/proc/{pid}/stat") as f:
+        return int(f.read().rsplit(")", 1)[1].split()[1])
+
+
+class Helper(dbus.service.Object):
+    @dbus.service.method("org.denix.PidHelper", in_signature="i", out_signature="ai")
+    def Ancestors(self, pid):
+        chain = []
+        try:
+            while pid > 1 and len(chain) < 64:
+                pid = parent(pid)
+                chain.append(pid)
+        except (OSError, ValueError, IndexError):
+            pass
+        return dbus.Array(chain, signature="i")
+
+
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+bus = dbus.SessionBus()
+name = dbus.service.BusName("org.denix.PidHelper", bus)
+Helper(bus, "/")
+GLib.MainLoop().run()

@@ -1,4 +1,18 @@
-var SCRATCH_CLASS = "scratchpad";
+var SCRATCHPADS = [
+    { name: "Scratchpad", cls: "scratchpad", key: "Meta+A", launcher: "/component/kitty_scratchpad_desktop", w: 0.9, h: 0.4 },
+    { name: "MusicScratchpad", cls: "scratchpad-music", key: "Meta+S", launcher: "/component/kitty_scratchpad_music_desktop", w: 0.6, h: 0.5 }
+];
+var TERMINALS = ["kitty"];
+
+function enabled(key) {
+    return readConfig(key, true) !== false && String(readConfig(key, true)) !== "false";
+}
+function isScratchClass(cls) {
+    return SCRATCHPADS.some(function (s) { return s.cls == cls; });
+}
+function onCurrentDesktop(w) {
+    return w.onAllDesktops || w.desktops.some(function (d) { return d.id == workspace.currentDesktop.id; });
+}
 
 var previousDesktop = null;
 workspace.currentDesktopChanged.connect(function (prev) {
@@ -8,8 +22,22 @@ registerShortcut("AwesomePreviousDesktop", "Awesome: Go back to previous desktop
     if (previousDesktop)
         workspace.currentDesktop = previousDesktop;
 });
+for (var n = 1; n <= 10; n++) {
+    (function (n) {
+        registerShortcut("AwesomeViewTag" + n, "Awesome: View workspace " + n, "Meta+" + (n % 10), function () {
+            var d = workspace.desktops[n - 1];
+            if (!d)
+                return;
+            if (enabled("backAndForth") && workspace.currentDesktop.id == d.id && previousDesktop)
+                workspace.currentDesktop = previousDesktop;
+            else
+                workspace.currentDesktop = d;
+        });
+    })(n);
+}
 
 var minimizedStack = [];
+var swallowedTerminals = {};
 function trackMinimize(w) {
     w.minimizedChanged.connect(function () {
         var i = minimizedStack.indexOf(w);
@@ -38,7 +66,10 @@ registerShortcut("AwesomeRestoreMinimized", "Awesome: Restore last minimized win
 });
 
 function forbidMinimize(w) {
-    if (w.minimized && w.resourceClass != SCRATCH_CLASS && (w.normalWindow || w.dialog))
+    if (!enabled("noMinimize"))
+        return;
+    if (w.minimized && !isScratchClass(w.resourceClass) && !swallowedTerminals[w.internalId]
+        && (w.normalWindow || w.dialog))
         w.minimized = false;
 }
 workspace.windowList().forEach(function (w) {
@@ -49,40 +80,101 @@ workspace.windowAdded.connect(function (w) {
     w.minimizedChanged.connect(function () { forbidMinimize(w); });
 });
 
-function findScratchpad() {
+function findByClass(cls) {
     var list = workspace.windowList();
     for (var i = 0; i < list.length; i++)
-        if (list[i].resourceClass == SCRATCH_CLASS)
+        if (list[i].resourceClass == cls)
             return list[i];
     return null;
 }
-function placeScratchpad(w) {
+function placeScratchpad(w, s) {
     var area = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
-    var width = Math.round(area.width * 0.9), height = Math.round(area.height * 0.4);
+    var width = Math.round(area.width * s.w), height = Math.round(area.height * s.h);
     w.onAllDesktops = true;
     w.keepAbove = true;
     w.skipTaskbar = true;
     w.skipSwitcher = true;
     w.frameGeometry = { x: area.x + Math.round((area.width - width) / 2), y: area.y, width: width, height: height };
 }
-function showScratchpad(w) {
-    placeScratchpad(w);
+function showScratchpad(w, s) {
+    placeScratchpad(w, s);
     w.minimized = false;
     workspace.activeWindow = w;
 }
-workspace.windowAdded.connect(function (w) {
-    if (w.resourceClass == SCRATCH_CLASS)
-        showScratchpad(w);
+SCRATCHPADS.forEach(function (s) {
+    registerShortcut("Awesome" + s.name, "Awesome: Toggle " + s.name, s.key, function () {
+        var w = findByClass(s.cls);
+        if (!w) {
+            callDBus("org.kde.kglobalaccel", s.launcher, "org.kde.kglobalaccel.Component", "invokeShortcut", "_launch");
+            return;
+        }
+        if (w.minimized || workspace.activeWindow !== w)
+            showScratchpad(w, s);
+        else
+            w.minimized = true;
+    });
 });
-registerShortcut("AwesomeScratchpad", "Awesome: Toggle scratchpad terminal", "Meta+A", function () {
-    var w = findScratchpad();
-    if (!w) {
-        callDBus("org.kde.kglobalaccel", "/component/kitty_scratchpad_desktop",
-                 "org.kde.kglobalaccel.Component", "invokeShortcut", "_launch");
+workspace.windowAdded.connect(function (w) {
+    SCRATCHPADS.forEach(function (s) {
+        if (w.resourceClass == s.cls)
+            showScratchpad(w, s);
+    });
+});
+
+registerShortcut("AwesomeSwapScreens", "Awesome: Swap windows between screens", "Meta+Shift+O", function () {
+    var screens = workspace.screens;
+    if (screens.length < 2)
         return;
+    var a = workspace.activeScreen;
+    var b = screens[0].name == a.name ? screens[1] : screens[0];
+    var toB = [], toA = [];
+    workspace.windowList().forEach(function (w) {
+        if (!w.normalWindow || w.minimized || isScratchClass(w.resourceClass) || !onCurrentDesktop(w))
+            return;
+        if (w.output.name == a.name)
+            toB.push(w);
+        else if (w.output.name == b.name)
+            toA.push(w);
+    });
+    toB.forEach(function (w) { workspace.sendClientToScreen(w, b); });
+    toA.forEach(function (w) { workspace.sendClientToScreen(w, a); });
+});
+
+var swallowedBy = {};
+function terminalFor(chain) {
+    var list = workspace.windowList();
+    for (var i = 0; i < list.length; i++) {
+        var t = list[i];
+        if (TERMINALS.indexOf(t.resourceClass) >= 0 && !t.minimized && chain.indexOf(t.pid) >= 0)
+            return t;
     }
-    if (w.minimized || workspace.activeWindow !== w)
-        showScratchpad(w);
-    else
-        w.minimized = true;
+    return null;
+}
+workspace.windowAdded.connect(function (w) {
+    if (!enabled("swallow") || !w.normalWindow || w.pid <= 0)
+        return;
+    if (TERMINALS.indexOf(w.resourceClass) >= 0 || isScratchClass(w.resourceClass))
+        return;
+    callDBus("org.denix.PidHelper", "/", "org.denix.PidHelper", "Ancestors", w.pid, function (chain) {
+        if (!chain || w.deleted)
+            return;
+        var t = terminalFor(Array.prototype.slice.call(chain));
+        if (!t)
+            return;
+        swallowedBy[w.internalId] = t;
+        swallowedTerminals[t.internalId] = true;
+        t.minimized = true;
+        workspace.activeWindow = w;
+    });
+});
+workspace.windowRemoved.connect(function (w) {
+    var t = swallowedBy[w.internalId];
+    if (!t)
+        return;
+    delete swallowedBy[w.internalId];
+    delete swallowedTerminals[t.internalId];
+    if (!t.deleted) {
+        t.minimized = false;
+        workspace.activeWindow = t;
+    }
 });

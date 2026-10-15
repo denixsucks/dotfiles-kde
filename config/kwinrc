@@ -20,6 +20,14 @@ Name_9=New Desktop
 Number=10
 Rows=1
 
+[Effect-diminactive]
+DimByGroup=false
+Strength=15
+
+[Effect-hidecursor]
+HideOnTyping=true
+InactivityDuration=4
+
 [Effect-kwin4_effect_geometry_change]
 Duration=180
 
@@ -36,6 +44,8 @@ NightTemperature=3500
 [Plugins]
 awesomeextrasEnabled=true
 cursorfollowsfocusEnabled=true
+diminactiveEnabled=true
+hidecursorEnabled=true
 keyhelpEnabled=true
 krohnkiteEnabled=true
 kwin4_effect_geometry_changeEnabled=true
@@ -63,14 +73,25 @@ OutlineColor=233,58,154
 OutlineThickness=2
 Size=8
 
+[Script-awesomeextras]
+backAndForth=true
+noMinimize=true
+swallow=true
+
 [Script-krohnkite]
 binaryTreeLayoutOrder=0
 cascadeLayoutOrder=0
 columnsLayoutOrder=0
 floatingLayoutOrder=0
-ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter,vicinae-server,vicinae,scratchpad
+ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter,vicinae-server,vicinae,scratchpad,scratchpad-music
 monocleLayoutOrder=4
 quarterLayoutOrder=0
+screenGapBetween=6
+screenGapBottom=6
+screenGapLeft=6
+screenGapRight=6
+screenGapTop=6
+soleWindowNoGaps=true
 spiralLayoutOrder=2
 spreadLayoutOrder=0
 stackedLayoutOrder=0

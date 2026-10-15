@@ -34,6 +34,14 @@ while IFS= read -r -d '' f; do
 done < <(find "$REPO/local/share" -type f -print0)
 update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
+echo "==> Helpers -> ~/.local/bin"
+mkdir -p "$HOME/.local/bin"
+install -m 755 "$REPO/local/bin/kwin-pidhelper" "$HOME/.local/bin/kwin-pidhelper"
+systemctl --user daemon-reload
+systemctl --user enable --now kwin-pidhelper 2>/dev/null || true
+
+"$REPO/apply-features.sh" >/dev/null || true
+
 echo "==> Reloading KWin and starting plasmashell"
 qdbus6 org.kde.KWin /KWin reconfigure 2>/dev/null || true
 systemctl --user start plasma-plasmashell 2>/dev/null || true

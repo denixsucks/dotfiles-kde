@@ -25,6 +25,10 @@ Item {
             ["Meta+M", "maximize"],
             ["Meta+Shift+T", "keep on top"],
             ["Meta+O", "send to other screen"],
+            ["Meta+Shift+O", "swap screens"],
+            ["Meta+C", "center window"],
+            ["Meta+Shift+P", "pin to all workspaces"],
+            ["Meta+U", "jump to urgent"],
             ["Meta+Q", "close"],
             ["Meta+Ctrl+N", "restore minimized"],
             ["Meta+LMB / RMB", "drag move / resize"]
@@ -39,7 +43,7 @@ Item {
             ["Meta+Ctrl+J / K", "fewer / more masters"]
         ] },
         { title: "tag", keys: [
-            ["Meta+1…0", "view workspace"],
+            ["Meta+1…0", "view (again = back)"],
             ["Meta+Shift+1…0", "move window to workspace"],
             ["Meta+J / K", "previous / next workspace"],
             ["Meta+Tab", "last workspace"]
@@ -47,6 +51,7 @@ Item {
         { title: "apps", keys: [
             ["Meta+T / Return", "kitty"],
             ["Meta+A", "dropdown terminal"],
+            ["Meta+S", "dropdown music"],
             ["Meta+R / Alt+Space", "vicinae"],
             ["Meta+W", "firefox"],
             ["Meta+Shift+W", "chromium"],

@@ -37,7 +37,7 @@ Item {
             ["Meta+Space", "next layout"],
             ["Meta+Shift+Space", "previous layout"],
             ["Meta+G", "group with previous window"],
-            ["Meta+Ctrl+Tab", "next window in group"],
+            ["Meta+T", "next window in group"],
             ["Meta+Shift+G", "ungroup"],
             ["Meta+Ctrl+T", "tile"],
             ["Meta+Shift+F", "monocle"],
@@ -52,7 +52,7 @@ Item {
             ["Meta+Tab", "last workspace"]
         ] },
         { title: "apps", keys: [
-            ["Meta+T / Return", "kitty"],
+            ["Meta+Return", "kitty"],
             ["Meta+A", "dropdown terminal"],
             ["Meta+S", "dropdown music"],
             ["Meta+R / Alt+Space", "vicinae"],
@@ -86,7 +86,7 @@ Item {
     }
 
     ShortcutHandler {
-        name: "KeyHelpToggle"
+        name: "KeyHelpPopup"
         text: "Show keybinding help"
         sequence: "Meta+F1"
         onActivated: root.toggle()

@@ -49,7 +49,7 @@ NightTemperature=3500
 [Plugins]
 awesomeextrasEnabled=true
 cursorfollowsfocusEnabled=true
-diminactiveEnabled=true
+diminactiveEnabled=false
 hidecursorEnabled=true
 keyhelpEnabled=true
 krohnkiteEnabled=true

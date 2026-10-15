@@ -117,7 +117,7 @@ registerShortcut("AwesomeGroupJoin", "Awesome: Group focused window with the pre
     g.push(w);
     showMember(g, t);
 });
-registerShortcut("AwesomeGroupNext", "Awesome: Show next window in group", "Meta+Ctrl+Tab", function () {
+registerShortcut("AwesomeGroupNext", "Awesome: Show next window in group", "Meta+T", function () {
     var w = workspace.activeWindow, g = w && groupOf(w);
     if (g)
         showMember(g, g[(g.indexOf(w) + 1) % g.length]);

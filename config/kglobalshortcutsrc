@@ -44,7 +44,7 @@ _k_friendly_name=Session Management
 Activate Window Demanding Attention=Meta+U,Meta+Ctrl+A,Activate Window Demanding Attention
 AwesomeGroupBreak=Meta+Shift+G,none,Awesome: Ungroup
 AwesomeGroupJoin=Meta+G,none,Awesome: Group focused window with the previous one
-AwesomeGroupNext=Meta+Ctrl+Tab,none,Awesome: Show next window in group
+AwesomeGroupNext=Meta+T,none,Awesome: Show next window in group
 AwesomeMusicScratchpad=Meta+S,none,Awesome: Toggle MusicScratchpad
 AwesomePreviousDesktop=Meta+Tab,none,Awesome: Go back to previous desktop
 AwesomeRestoreMinimized=Meta+Ctrl+N,none,Awesome: Restore last minimized window
@@ -70,6 +70,7 @@ ExposeClass=Ctrl+F7\tMeta+F7,Ctrl+F7\tMeta+F7,Toggle Present Windows (Window cla
 ExposeClassCurrentDesktop=none,none,Toggle Present Windows (Window class on current desktop)
 Grid View=none,Meta+G,Toggle Grid View
 Increase Opacity=none,none,Increase Opacity of Active Window by 5%
+KeyHelpPopup=Meta+F1,none,Show keybinding help
 KeyHelpToggle=Meta+F1,none,Show keybinding help
 Kill Window=Meta+Ctrl+Esc,Meta+Ctrl+Esc,Kill Window
 KrohnkiteBTreeLayout=none,none,Krohnkite: Select Layout - BTree
@@ -119,6 +120,7 @@ MoveZoomLeft=none,none,Move Zoomed Area to Left
 MoveZoomRight=none,none,Move Zoomed Area to Right
 MoveZoomUp=none,none,Move Zoomed Area Upwards
 Overview=none,Meta+W,Toggle Overview
+QTestShortcut=Meta+Ctrl+Alt+F9,none,qtest
 Setup Window Shortcut=none,none,Setup Window Shortcut
 Show Desktop=none,Meta+D,Peek at Desktop
 Switch One Desktop Down=none,Meta+Ctrl+Down,Switch One Desktop Down
@@ -347,7 +349,7 @@ _launch=Meta+Ctrl+Alt+F11
 _launch=Meta+Ctrl+Alt+F10
 
 [services][kitty.desktop]
-_launch=Meta+T\tMeta+Return
+_launch=Meta+Return
 
 [services][org.kde.dolphin.desktop]
 _launch=Meta+D

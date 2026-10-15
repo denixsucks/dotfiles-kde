@@ -109,7 +109,7 @@ git push
 | Meta+Space / Meta+Shift+Space | Next / previous layout (Tile → Spiral → Three Column → Monocle) |
 | Meta+Ctrl+T | Back to Tile |
 | Meta+G | Group the focused window with the previous one (it hides behind it, sharing the tile) |
-| Meta+Ctrl+Tab | Show the next window in the group |
+| Meta+T | Show the next window in the group |
 | Meta+Shift+G | Ungroup |
 | Meta+Shift+F | Monocle |
 
@@ -126,7 +126,7 @@ git push
 
 | Keys | Action |
 |---|---|
-| Meta+T, Meta+Return | kitty |
+| Meta+Return | kitty |
 | Meta+A | Dropdown scratchpad terminal |
 | Meta+S | Dropdown rmpc (music) |
 | Meta+W / Meta+Shift+W | Firefox / Chromium |

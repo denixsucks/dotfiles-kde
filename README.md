@@ -34,6 +34,22 @@ Build `kwin-effect-rounded-corners` from the AUR (second line), even if a repo p
 
 Not included: the Vicinae launcher itself (installed separately) and the wallpaper image.
 
+## Per-app minimum sizes
+
+Every window can be tiled down to 1x1. Apps that misbehave below their own minimum (they fight the tiler and flicker) go in `min-sizes.conf`, one per line:
+
+```
+ffxiv_dx11.exe 1032 600
+```
+
+The first word is the window class. Then run:
+
+```bash
+./apply-min-sizes.sh
+```
+
+To find an app's window class: System Settings → Window Management → Window Rules → Add New → Detect Window Properties, then click the app.
+
 ## Update the repo after changing things
 
 ```bash

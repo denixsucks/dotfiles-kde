@@ -1,6 +1,6 @@
 [General]
-count=3
-rules=a7e3d0c1-steam-0000-0000-desktop10rule,b81f22c4-ffxiv-0000-0000-nomaximize00,c0a1b2c3-all0-0000-0000-resizeanything
+count=4
+rules=a7e3d0c1-steam-0000-0000-desktop10rule,b81f22c4-ffxiv-0000-0000-nomaximize00,minsize-ffxiv_dx11.exe,c0a1b2c3-all0-0000-0000-resizeanything
 
 [a7e3d0c1-steam-0000-0000-desktop10rule]
 Description=Steam to desktop 10 (from Awesome rules.lua)
@@ -10,13 +10,11 @@ wmclass=steam
 wmclassmatch=1
 
 [b81f22c4-ffxiv-0000-0000-nomaximize00]
-Description=FFXIV: never maximize, real 1024px minimum (stops resize fight)
+Description=FFXIV: never maximize (so Krohnkite can tile it)
 maximizehoriz=false
 maximizehorizrule=2
 maximizevert=false
 maximizevertrule=2
-minsize=1032,600
-minsizerule=2
 wmclass=ffxiv_dx11.exe
 wmclassmatch=1
 
@@ -29,3 +27,10 @@ minsizerule=2
 strictgeometry=false
 strictgeometryrule=2
 types=1
+
+[minsize-ffxiv_dx11.exe]
+Description=Minimum size for ffxiv_dx11.exe
+minsize=1032,600
+minsizerule=2
+wmclass=ffxiv_dx11.exe
+wmclassmatch=1

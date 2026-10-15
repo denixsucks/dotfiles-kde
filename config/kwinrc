@@ -9,14 +9,16 @@ Id_6=4c4f62a0-3679-484d-96e0-7040b0a7094c
 Id_7=d9a8db4c-c772-4d73-9037-b2b7580bbd81
 Id_8=a7e9b542-f7c8-4a25-81ae-99ea986d4996
 Id_9=bc651d55-3faf-4fe8-922f-1b8473107f53
-Name_10=New Desktop
-Name_3=New Desktop
-Name_4=New Desktop
-Name_5=New Desktop
-Name_6=New Desktop
-Name_7=New Desktop
-Name_8=New Desktop
-Name_9=New Desktop
+Name_1=1
+Name_10=10
+Name_2=2
+Name_3=3
+Name_4=4
+Name_5=5
+Name_6=6
+Name_7=7
+Name_8=8
+Name_9=9
 Number=10
 Rows=1
 
@@ -33,6 +35,9 @@ Duration=180
 
 [Effect-overview]
 BorderActivate=1
+
+[Effect-slide]
+SlideBackground=false
 
 [ModifierOnlyShortcuts]
 Meta=
@@ -82,7 +87,9 @@ swallow=true
 binaryTreeLayoutOrder=0
 cascadeLayoutOrder=0
 columnsLayoutOrder=0
+floatingClass=
 floatingLayoutOrder=0
+floatingTitle=Discord Updater,Sign in to Steam,Steam Guard,Steam - Self Updater,Friends List,Picture-in-Picture,Library Access Error
 ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kwin_wayland,ksmserver-logout-greeter,vicinae-server,vicinae,scratchpad,scratchpad-music
 monocleLayoutOrder=4
 quarterLayoutOrder=0
@@ -188,7 +195,8 @@ padding=4
 tiles={"layoutDirection":"horizontal","tiles":[]}
 
 [Windows]
-DelayFocusInterval=0
+ActivationDesktopPolicy=2
+DelayFocusInterval=250
 ElectricBorders=1
 FocusPolicy=FocusFollowsMouse
 NextFocusPrefersMouse=true

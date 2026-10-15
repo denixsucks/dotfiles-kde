@@ -107,7 +107,7 @@ ForegroundVisited=173,101,175
 [General]
 AccentColor=233,58,154
 ColorScheme=Materia Dark
-ColorSchemeHash=3f6740676ac1db9fa8f316fd23cbf5b507d29e84
+ColorSchemeHash=3b17c5d56f8f372f0b0b9f709c4579c23e51fe6a
 DeviceLedsAccentColored=true
 LastUsedCustomAccentColor=233,58,154
 TerminalApplication=kitty
@@ -120,6 +120,9 @@ font=Cantarell,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 menuFont=Cantarell,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 smallestReadableFont=Cantarell,8,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
 toolBarFont=Cantarell,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,,0,0
+
+[Icons]
+Theme=Papirus-Dark
 
 [KDE]
 AnimationDurationFactor=0.75

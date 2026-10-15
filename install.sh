@@ -36,12 +36,12 @@ update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
 echo "==> Helpers -> ~/.local/bin"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "$REPO/local/bin/kwin-pidhelper" "$HOME/.local/bin/kwin-pidhelper"
+for f in "$REPO"/local/bin/*; do install -m 755 "$f" "$HOME/.local/bin/$(basename "$f")"; done
 systemctl --user daemon-reload
 systemctl --user enable --now kwin-pidhelper 2>/dev/null || true
 systemctl --user enable --now mpd.socket 2>/dev/null || true
 
-"$REPO/apply-features.sh" >/dev/null || true
+"$HOME/.local/bin/dot-reload" >/dev/null || true
 
 echo "==> Reloading KWin and starting plasmashell"
 qdbus6 org.kde.KWin /KWin reconfigure 2>/dev/null || true

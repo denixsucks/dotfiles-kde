@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+import configparser
+import os
+import re
+import subprocess
+import sys
+import time
+
+CONFIG = os.path.expanduser(os.environ.get("DOT_CONFIG", "~/.config/dotfiles-kde/config.conf"))
+RULES = os.path.expanduser("~/.config/kwinrulesrc")
+GLOBAL_RULE = "c0a1b2c3-all0-0000-0000-resizeanything"
+TRUE = {"yes", "true", "on", "1"}
+
+
+def kw(file, group, key, value):
+    subprocess.run(["kwriteconfig6", "--file", file, "--group", group, "--key", key, str(value)], check=True)
+
+
+def kdel(file, group, key):
+    subprocess.run(["kwriteconfig6", "--file", file, "--group", group, "--key", key, "--delete"], check=True)
+
+
+def kread(file, group, key):
+    return subprocess.run(["kreadconfig6", "--file", file, "--group", group, "--key", key],
+                          capture_output=True, text=True).stdout.strip()
+
+
+def kwin(*args):
+    subprocess.run(["qdbus6", "org.kde.KWin", *args], capture_output=True)
+
+
+def effect(name, on):
+    kw("kwinrc", "Plugins", f"{name}Enabled", "true" if on else "false")
+    if on:
+        kwin("/Effects", "org.kde.kwin.Effects.loadEffect", name)
+        kwin("/Effects", "org.kde.kwin.Effects.reconfigureEffect", name)
+    else:
+        kwin("/Effects", "org.kde.kwin.Effects.unloadEffect", name)
+
+
+def apply_features(f):
+    on = lambda k, d="yes": f.get(k, d).strip().lower() in TRUE
+    gap = f.get("gaps", "6")
+    for side in ("Left", "Right", "Top", "Bottom", "Between"):
+        kw("kwinrc", "Script-krohnkite", f"screenGap{side}", gap)
+    kw("kwinrc", "Script-krohnkite", "soleWindowNoGaps", str(on("smart_gaps")).lower())
+    kw("kwinrc", "Effect-diminactive", "Strength", f.get("dim_strength", "15"))
+    effect("diminactive", on("dim"))
+    kw("kwinrc", "Effect-hidecursor", "InactivityDuration", f.get("hide_cursor_after", "4"))
+    effect("hidecursor", on("hide_cursor"))
+    effect("kwin4_effect_shapecorners", on("outlines"))
+    effect("kwin4_effect_geometry_change", on("animations"))
+    kw("kwinrc", "Windows", "FocusPolicy", "FocusFollowsMouse" if on("focus_follows_mouse") else "ClickToFocus")
+    kw("kwinrc", "Windows", "DelayFocusInterval", f.get("focus_delay", "250"))
+    kw("kwinrc", "Plugins", "cursorfollowsfocusEnabled", str(on("cursor_follows_focus")).lower())
+    for key, name in (("swallow", "swallow"), ("back_and_forth", "backAndForth"), ("no_minimize", "noMinimize")):
+        kw("kwinrc", "Script-awesomeextras", name, str(on(key)).lower())
+
+
+def split_list(value):
+    return [v.strip() for v in value.split(",") if v.strip()]
+
+
+def apply_float(f):
+    kw("kwinrc", "Script-krohnkite", "floatingClass", ",".join(split_list(f.get("class", ""))))
+    kw("kwinrc", "Script-krohnkite", "floatingTitle", ",".join(split_list(f.get("title", ""))))
+
+
+def rule_id(cls):
+    return "minsize-" + re.sub(r"[^A-Za-z0-9._-]", "_", cls)
+
+
+def apply_min_sizes(sizes):
+    text = open(RULES).read() if os.path.exists(RULES) else ""
+    for group in re.findall(r"^\[(minsize-[^\]]+)\]$", text, re.M):
+        block = re.search(rf"^\[{re.escape(group)}\]\n(.*?)(?=^\[|\Z)", text, re.M | re.S).group(1)
+        for key in re.findall(r"^([^=\n]+)=", block, re.M):
+            kdel("kwinrulesrc", group, key)
+    added = []
+    for cls, size in sizes.items():
+        m = re.fullmatch(r"\s*(\d+)\s*[x,* ]\s*(\d+)\s*", size)
+        if not m:
+            print(f"skipping {cls}: size must look like 1032x600", file=sys.stderr)
+            continue
+        rid = rule_id(cls)
+        for key, value in (("Description", f"Minimum size for {cls}"), ("wmclass", cls), ("wmclassmatch", 1),
+                           ("minsize", f"{m.group(1)},{m.group(2)}"), ("minsizerule", 2)):
+            kw("kwinrulesrc", rid, key, value)
+        added.append(rid)
+    keep = [r for r in kread("kwinrulesrc", "General", "rules").split(",")
+            if r and not r.startswith("minsize-") and r != GLOBAL_RULE]
+    rules = keep + added + [GLOBAL_RULE]
+    kw("kwinrulesrc", "General", "rules", ",".join(rules))
+    kw("kwinrulesrc", "General", "count", len(rules))
+
+
+def reload_scripts():
+    for script in ("krohnkite", "awesomeextras"):
+        kw("kwinrc", "Plugins", f"{script}Enabled", "false")
+    kwin("/KWin", "org.kde.KWin.reconfigure")
+    time.sleep(1)
+    for script in ("krohnkite", "awesomeextras"):
+        kw("kwinrc", "Plugins", f"{script}Enabled", "true")
+    kwin("/KWin", "org.kde.KWin.reconfigure")
+    time.sleep(1.5)
+
+
+def main():
+    if not os.path.exists(CONFIG):
+        sys.exit(f"no config at {CONFIG}")
+    cp = configparser.ConfigParser(delimiters=("=",), interpolation=None)
+    cp.optionxform = str
+    cp.read(CONFIG)
+    apply_features(cp["features"] if cp.has_section("features") else {})
+    apply_float(cp["float"] if cp.has_section("float") else {})
+    apply_min_sizes(dict(cp["min-sizes"]) if cp.has_section("min-sizes") else {})
+    reload_scripts()
+    subprocess.run(["notify-send", "-a", "dot-reload", "-t", "1500", "Config reloaded", CONFIG], check=False)
+    print(f"reloaded {CONFIG}")
+
+
+main()

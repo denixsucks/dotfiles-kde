@@ -42,6 +42,9 @@ _k_friendly_name=Session Management
 
 [kwin]
 Activate Window Demanding Attention=Meta+U,Meta+Ctrl+A,Activate Window Demanding Attention
+AwesomeGroupBreak=Meta+Shift+G,none,Awesome: Ungroup
+AwesomeGroupJoin=Meta+G,none,Awesome: Group focused window with the previous one
+AwesomeGroupNext=Meta+Ctrl+Tab,none,Awesome: Show next window in group
 AwesomeMusicScratchpad=Meta+S,none,Awesome: Toggle MusicScratchpad
 AwesomePreviousDesktop=Meta+Tab,none,Awesome: Go back to previous desktop
 AwesomeRestoreMinimized=Meta+Ctrl+N,none,Awesome: Restore last minimized window
@@ -65,7 +68,7 @@ Expose=Ctrl+F9\tMeta+F9,Ctrl+F9\tMeta+F9,Toggle Present Windows (Current desktop
 ExposeAll=Launch (C)\tCtrl+F10\tMeta+F10,Launch (C)\tCtrl+F10\tMeta+F10,Toggle Present Windows (All desktops)
 ExposeClass=Ctrl+F7\tMeta+F7,Ctrl+F7\tMeta+F7,Toggle Present Windows (Window class)
 ExposeClassCurrentDesktop=none,none,Toggle Present Windows (Window class on current desktop)
-Grid View=Meta+G,Meta+G,Toggle Grid View
+Grid View=none,Meta+G,Toggle Grid View
 Increase Opacity=none,none,Increase Opacity of Active Window by 5%
 KeyHelpToggle=Meta+F1,none,Show keybinding help
 Kill Window=Meta+Ctrl+Esc,Meta+Ctrl+Esc,Kill Window

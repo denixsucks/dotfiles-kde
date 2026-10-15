@@ -65,10 +65,87 @@ registerShortcut("AwesomeRestoreMinimized", "Awesome: Restore last minimized win
     }
 });
 
+var groups = [];
+var groupHidden = {};
+var lastActive = null;
+var currentActive = workspace.activeWindow;
+workspace.windowActivated.connect(function (w) {
+    if (w && w !== currentActive) {
+        lastActive = currentActive;
+        currentActive = w;
+    }
+});
+function groupOf(w) {
+    for (var i = 0; i < groups.length; i++)
+        if (groups[i].indexOf(w) >= 0)
+            return groups[i];
+    return null;
+}
+function showMember(g, w) {
+    g.forEach(function (m) {
+        if (m !== w) {
+            groupHidden[m.internalId] = true;
+            m.minimized = true;
+        }
+    });
+    delete groupHidden[w.internalId];
+    w.minimized = false;
+    workspace.activeWindow = w;
+}
+function dissolve(g) {
+    g.forEach(function (m) {
+        delete groupHidden[m.internalId];
+        m.minimized = false;
+    });
+    groups.splice(groups.indexOf(g), 1);
+}
+registerShortcut("AwesomeGroupJoin", "Awesome: Group focused window with the previous one", "Meta+G", function () {
+    var w = workspace.activeWindow, t = lastActive;
+    if (!w || !t || w === t || t.deleted || !w.normalWindow || !t.normalWindow)
+        return;
+    var old = groupOf(w);
+    if (old) {
+        old.splice(old.indexOf(w), 1);
+        if (old.length < 2)
+            dissolve(old);
+    }
+    var g = groupOf(t);
+    if (!g) {
+        g = [t];
+        groups.push(g);
+    }
+    g.push(w);
+    showMember(g, t);
+});
+registerShortcut("AwesomeGroupNext", "Awesome: Show next window in group", "Meta+Ctrl+Tab", function () {
+    var w = workspace.activeWindow, g = w && groupOf(w);
+    if (g)
+        showMember(g, g[(g.indexOf(w) + 1) % g.length]);
+});
+registerShortcut("AwesomeGroupBreak", "Awesome: Ungroup", "Meta+Shift+G", function () {
+    var w = workspace.activeWindow, g = w && groupOf(w);
+    if (g) {
+        dissolve(g);
+        workspace.activeWindow = w;
+    }
+});
+workspace.windowRemoved.connect(function (w) {
+    var g = groupOf(w);
+    if (!g)
+        return;
+    var wasVisible = !groupHidden[w.internalId];
+    delete groupHidden[w.internalId];
+    g.splice(g.indexOf(w), 1);
+    if (g.length < 2)
+        dissolve(g);
+    else if (wasVisible)
+        showMember(g, g[0]);
+});
+
 function forbidMinimize(w) {
     if (!enabled("noMinimize"))
         return;
-    if (w.minimized && !isScratchClass(w.resourceClass) && !swallowedTerminals[w.internalId]
+    if (w.minimized && !isScratchClass(w.resourceClass) && !swallowedTerminals[w.internalId] && !groupHidden[w.internalId]
         && (w.normalWindow || w.dialog))
         w.minimized = false;
 }

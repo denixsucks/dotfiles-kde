@@ -16,6 +16,7 @@ KWin stays the compositor, so XWayland apps (Krita drag and drop, games) keep wo
 | `local/share/kwin/scripts/cursorfollowsfocus` | Cursor jumps to the focused window on keyboard focus changes, across screens |
 | `local/share/kwin/scripts/awesomeextras` | Meta+Tab previous workspace, Meta+A scratchpad, no minimizing, Meta+Ctrl+N restore |
 | `local/share/kwin/scripts/keyhelp` | Meta+F1 keybinding popup, like AwesomeWM's hotkeys help |
+| `config/dotfiles-kde/config.conf`, `local/bin/dot-reload` | All tunable settings, and the command that applies them |
 | `local/bin/kwin-pidhelper`, `config/systemd/user/kwin-pidhelper.service` | Tiny parent-process lookup service used for window swallowing |
 | `local/share/plasma/plasmoids/org.denix.statusline` | Plain-text `cpu │ gpu │ ram │ net` bar widget |
 | `local/share/plasma/plasmoids/org.kde.windowtitle` | Window Title widget using the pixel font |
@@ -35,39 +36,38 @@ Build `kwin-effect-rounded-corners` from the AUR (second line), even if a repo p
 
 Not included: the Vicinae launcher itself (installed separately) and the wallpaper image.
 
-## Feature toggles
+## Config
 
-Turn things on and off in `features.conf`, then run `./apply-features.sh`:
+Everything tunable lives in **`~/.config/dotfiles-kde/config.conf`**. Edit it, then run **`dot-reload`**.
 
-| Key | Default | What it does |
-|---|---|---|
-| `gaps` | `6` | Pixels between tiles and screen edges (`0` = none) |
-| `smart_gaps` | `yes` | No gaps when a window is alone on a screen |
-| `dim` / `dim_strength` | `yes` / `15` | Darken unfocused windows (percent) |
-| `hide_cursor` / `hide_cursor_after` | `yes` / `4` | Hide the mouse cursor after N idle seconds and while typing |
-| `outlines` | `yes` | Pink outline on the active window |
-| `animations` | `yes` | Slide animation when tiles move or resize |
-| `focus_follows_mouse` | `yes` | Focus follows the pointer (`no` = click to focus) |
-| `cursor_follows_focus` | `yes` | Pointer jumps to windows focused with the keyboard |
-| `swallow` | `yes` | GUI apps started from kitty hide that terminal until they close |
-| `back_and_forth` | `yes` | Meta+N for the workspace you're on jumps back to the previous one |
-| `no_minimize` | `yes` | Windows can't stay minimized |
+```ini
+[features]
+gaps = 6                  # pixels between tiles (0 = none)
+smart_gaps = yes          # no gaps for a lone window
+dim = yes                 # darken unfocused windows
+dim_strength = 15
+hide_cursor = yes         # hide the pointer when idle / typing
+hide_cursor_after = 4
+outlines = yes            # pink outline on the active window
+animations = yes          # slide animation for tiling moves
+focus_follows_mouse = yes
+focus_delay = 250         # ms the pointer must rest before focus moves (keeps menus open)
+cursor_follows_focus = yes
+swallow = yes             # GUI apps started from kitty hide the terminal
+back_and_forth = yes      # Meta+N on the current workspace jumps back
+no_minimize = yes
 
-## Per-app minimum sizes
+[float]
+class =                   # window classes that always float
+title = Discord Updater, Sign in to Steam, Steam Guard, Friends List, Picture-in-Picture
 
-Every window can be tiled down to 1x1. Apps that misbehave below their own minimum (they fight the tiler and flicker) go in `min-sizes.conf`, one per line:
-
-```
-ffxiv_dx11.exe 1032 600
-```
-
-The first word is the window class. Then run:
-
-```bash
-./apply-min-sizes.sh
+[min-sizes]
+ffxiv_dx11.exe = 1032x600 # apps that flicker when tiled smaller than this
 ```
 
-To find an app's window class: System Settings → Window Management → Window Rules → Add New → Detect Window Properties, then click the app.
+`[float]` titles match any part of the window title. Every other window can be tiled down to 1x1; list apps in `[min-sizes]` only if they fight the tiler. To find a window's class: System Settings → Window Management → Window Rules → Add New → Detect Window Properties.
+
+mpv is set (`config/mpv/mpv.conf`) to follow the tile size and letterbox the video instead of resizing itself.
 
 ## Update the repo after changing things
 
@@ -108,6 +108,9 @@ git push
 |---|---|
 | Meta+Space / Meta+Shift+Space | Next / previous layout (Tile → Spiral → Three Column → Monocle) |
 | Meta+Ctrl+T | Back to Tile |
+| Meta+G | Group the focused window with the previous one (it hides behind it, sharing the tile) |
+| Meta+Ctrl+Tab | Show the next window in the group |
+| Meta+Shift+G | Ungroup |
 | Meta+Shift+F | Monocle |
 
 ### Workspaces

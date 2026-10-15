@@ -36,6 +36,9 @@ Item {
         { title: "layout", keys: [
             ["Meta+Space", "next layout"],
             ["Meta+Shift+Space", "previous layout"],
+            ["Meta+G", "group with previous window"],
+            ["Meta+Ctrl+Tab", "next window in group"],
+            ["Meta+Shift+G", "ungroup"],
             ["Meta+Ctrl+T", "tile"],
             ["Meta+Shift+F", "monocle"],
             ["Meta+Shift+H / L", "master narrower / wider"],
@@ -61,6 +64,7 @@ Item {
         ] },
         { title: "session", keys: [
             ["Meta+F1", "this help"],
+            ["dot-reload", "reload config.conf"],
             ["Meta+X", "lock"],
             ["Meta+Shift+Q", "log out"],
             ["Meta+Shift+X", "shut down"],

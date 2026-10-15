@@ -11,7 +11,7 @@ for f in kwinrc kwinrulesrc kglobalshortcutsrc plasma-org.kde.plasma.desktop-app
     cp "$HOME/.config/$f" "$REPO/config/$f"
 done
 
-for d in kwin/scripts/cursorfollowsfocus kwin/scripts/awesomeextras kwin/scripts/keyhelp \
+for d in kwin/scripts/cursorfollowsfocus kwin/scripts/awesomeextras kwin/scripts/keyhelp kwin/effects/kwin4_effect_geometry_change \
          plasma/plasmoids/org.denix.statusline plasma/plasmoids/org.kde.windowtitle; do
     rm -rf "${REPO:?}/local/share/$d"
     mkdir -p "$(dirname "$REPO/local/share/$d")"

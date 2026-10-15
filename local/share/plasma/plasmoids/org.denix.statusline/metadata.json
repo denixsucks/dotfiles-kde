@@ -1,0 +1,14 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Id": "org.denix.statusline",
+    "Name": "Status Line",
+    "Description": "dwm/waybar-style plain-text CPU, GPU, RAM and network status",
+    "Icon": "utilities-system-monitor",
+    "Category": "System Information",
+    "Authors": [{ "Name": "denix" }],
+    "Version": "1.0",
+    "License": "MIT"
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

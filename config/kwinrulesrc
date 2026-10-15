@@ -1,0 +1,29 @@
+[General]
+count=3
+rules=a7e3d0c1-steam-0000-0000-desktop10rule,b81f22c4-ffxiv-0000-0000-nomaximize00,c0a1b2c3-all0-0000-0000-resizeanything
+
+[a7e3d0c1-steam-0000-0000-desktop10rule]
+Description=Steam to desktop 10 (from Awesome rules.lua)
+desktops=295257fd-b21d-4366-8619-163e05444c5d
+desktopsrule=3
+wmclass=steam
+wmclassmatch=1
+
+[b81f22c4-ffxiv-0000-0000-nomaximize00]
+Description=FFXIV: never maximize (so Krohnkite can tile it)
+maximizehoriz=false
+maximizehorizrule=2
+maximizevert=false
+maximizevertrule=2
+wmclass=ffxiv_dx11.exe
+wmclassmatch=1
+
+[c0a1b2c3-all0-0000-0000-resizeanything]
+Description=All windowed apps: ignore fixed-size hints so Krohnkite can tile/resize them
+maxsize=32767,32767
+maxsizerule=2
+minsize=1,1
+minsizerule=2
+strictgeometry=false
+strictgeometryrule=2
+types=1

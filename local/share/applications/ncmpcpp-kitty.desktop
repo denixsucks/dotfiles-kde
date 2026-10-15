@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=ncmpcpp
+Exec=kitty --class ncmpcpp -e ncmpcpp
+Icon=multimedia-audio-player
+Terminal=false
+Categories=AudioVideo;Audio;Player;

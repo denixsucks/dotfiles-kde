@@ -1,0 +1,15 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Name": "Cursor Follows Focus",
+    "Description": "Warp the pointer into the active window when focus changes by keyboard or the window changes screen",
+    "Icon": "input-mouse",
+    "Authors": [{ "Name": "denix" }],
+    "Id": "cursorfollowsfocus",
+    "Version": "1.0",
+    "License": "MIT"
+  },
+  "X-Plasma-API": "declarativescript",
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-MainScript": "ui/main.qml"
+}

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Scratchpad Terminal
+Exec=kitty --class scratchpad
+Icon=kitty
+NoDisplay=true

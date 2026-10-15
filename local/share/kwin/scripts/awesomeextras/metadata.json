@@ -1,0 +1,15 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Name": "Awesome Extras",
+    "Description": "AwesomeWM-style extras: Meta+Tab previous desktop, Meta+Ctrl+N restore minimized, Meta+A scratchpad terminal",
+    "Icon": "preferences-system-windows",
+    "Authors": [{ "Name": "denix" }],
+    "Id": "awesomeextras",
+    "Version": "1.0",
+    "License": "MIT"
+  },
+  "X-Plasma-API": "javascript",
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-MainScript": "code/main.js"
+}

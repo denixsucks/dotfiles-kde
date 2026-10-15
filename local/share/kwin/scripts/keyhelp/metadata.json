@@ -1,0 +1,15 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Name": "Key Help",
+    "Description": "AwesomeWM-style keybinding popup on Meta+F1",
+    "Icon": "input-keyboard",
+    "Authors": [{ "Name": "denix" }],
+    "Id": "keyhelp",
+    "Version": "1.0",
+    "License": "MIT"
+  },
+  "X-Plasma-API": "declarativescript",
+  "X-Plasma-API-Minimum-Version": "6.0",
+  "X-Plasma-MainScript": "ui/main.qml"
+}

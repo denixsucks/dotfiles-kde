@@ -1,0 +1,6 @@
+[Common]
+OutlineCloseButton=true
+OutlineEnabled=false
+OutlineIntensity=OutlineOff
+RoundedCorners=false
+ShadowSize=ShadowSmall

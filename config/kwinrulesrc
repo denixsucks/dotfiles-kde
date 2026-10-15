@@ -10,11 +10,13 @@ wmclass=steam
 wmclassmatch=1
 
 [b81f22c4-ffxiv-0000-0000-nomaximize00]
-Description=FFXIV: never maximize (so Krohnkite can tile it)
+Description=FFXIV: never maximize, real 1024px minimum (stops resize fight)
 maximizehoriz=false
 maximizehorizrule=2
 maximizevert=false
 maximizevertrule=2
+minsize=1032,600
+minsizerule=2
 wmclass=ffxiv_dx11.exe
 wmclassmatch=1
 

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Music Scratchpad
-Exec=kitty --class scratchpad-music -e ncmpcpp
+Exec=kitty --class scratchpad-music -e rmpc
 Icon=multimedia-audio-player
 NoDisplay=true

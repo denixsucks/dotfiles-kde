@@ -56,7 +56,7 @@ Item {
             ["Meta+W", "firefox"],
             ["Meta+Shift+W", "chromium"],
             ["Meta+D", "dolphin"],
-            ["Meta+N", "ncmpcpp"],
+            ["Meta+N", "rmpc"],
             ["Print", "screenshot"]
         ] },
         { title: "session", keys: [

@@ -9,5 +9,6 @@ kitty
 dolphin
 firefox
 chromium
-ncmpcpp
+rmpc
+mpd
 spectacle

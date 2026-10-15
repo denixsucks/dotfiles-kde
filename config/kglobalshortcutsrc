@@ -32,7 +32,7 @@ push_to_talk=none,none,Push to talk
 [ksmserver]
 Halt Without Confirmation=none,none,Shut Down Without Confirmation
 Lock Session=Meta+X,Screensaver\tMeta+L,Lock Session
-Log Out=Meta+Shift+Q,Ctrl+Alt+Del,Log Out
+Log Out=Meta+Shift+Q,Ctrl+Alt+Del,Show Logout Screen
 Log Out Without Confirmation=none,none,Log Out Without Confirmation
 LogOut=none,none,Log Out
 Reboot=Meta+Shift+Backspace,none,Reboot
@@ -115,9 +115,9 @@ MoveZoomDown=none,none,Move Zoomed Area Downwards
 MoveZoomLeft=none,none,Move Zoomed Area to Left
 MoveZoomRight=none,none,Move Zoomed Area to Right
 MoveZoomUp=none,none,Move Zoomed Area Upwards
-Overview=none,Meta+W,Overview
+Overview=none,Meta+W,Toggle Overview
 Setup Window Shortcut=none,none,Setup Window Shortcut
-Show Desktop=none,Meta+D,Show Desktop
+Show Desktop=none,Meta+D,Peek at Desktop
 Switch One Desktop Down=none,Meta+Ctrl+Down,Switch One Desktop Down
 Switch One Desktop Up=none,Meta+Ctrl+Up,Switch One Desktop Up
 Switch One Desktop to the Left=Meta+J,Meta+Ctrl+Left,Switch One Desktop to the Left
@@ -177,7 +177,7 @@ Walk Through Windows of Current Application=Alt+`\tMeta+`,Alt+`\tMeta+`,Walk Thr
 Walk Through Windows of Current Application (Reverse)=Alt+~\tMeta+~,Alt+~\tMeta+~,Walk Through Windows of Current Application (Reverse)
 Walk Through Windows of Current Application Alternative=none,none,Walk Through Windows of Current Application Alternative
 Walk Through Windows of Current Application Alternative (Reverse)=none,none,Walk Through Windows of Current Application Alternative (Reverse)
-Window Above Other Windows=Meta+Shift+T,none,Window Above Other Windows
+Window Above Other Windows=Meta+Shift+T,none,Keep Window Above Others
 Window Below Other Windows=none,none,Keep Window Below Others
 Window Close=Alt+F4\tMeta+Q,Alt+F4,Close Window
 Window Custom Quick Tile Bottom=none,none,Custom Quick Tile Window to the Bottom
@@ -248,7 +248,7 @@ Window to Desktop 7=Meta+&\tMeta+Shift+7,none,Window to Desktop 7
 Window to Desktop 8=Meta+*\tMeta+Shift+8,none,Window to Desktop 8
 Window to Desktop 9=Meta+(\tMeta+Shift+9,none,Window to Desktop 9
 Window to Next Desktop=none,none,Window to Next Desktop
-Window to Next Screen=Meta+O,Meta+Shift+Right,Window to Next Screen
+Window to Next Screen=Meta+O,Meta+Shift+Right,Move Window to Next Screen
 Window to Previous Desktop=none,none,Window to Previous Desktop
 Window to Previous Screen=none,Meta+Shift+Left,Move Window to Previous Screen
 Window to Screen 0=none,none,Move Window to Screen 0
@@ -337,7 +337,7 @@ _launch=Meta+Shift+W
 [services][firefox.desktop]
 _launch=Meta+W
 
-[services][kitty-scratchpad-music.desktop]
+[services][kitty-scratchpad-rmpc.desktop]
 _launch=Meta+Ctrl+Alt+F11
 
 [services][kitty-scratchpad.desktop]
@@ -346,9 +346,6 @@ _launch=Meta+Ctrl+Alt+F10
 [services][kitty.desktop]
 _launch=Meta+T\tMeta+Return
 
-[services][ncmpcpp-kitty.desktop]
-_launch=Meta+N
-
 [services][org.kde.dolphin.desktop]
 _launch=Meta+D
 
@@ -356,7 +353,12 @@ _launch=Meta+D
 _launch=Search\tAlt+F2
 
 [services][org.kde.spectacle.desktop]
+CurrentMonitorScreenShot=none
+OpenWithoutScreenshot=none
 RecordRegion=none
+
+[services][rmpc-kitty.desktop]
+_launch=Meta+N
 
 [services][vicinae-2.desktop]
 _launch=Alt+Space\tMeta+R

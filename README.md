@@ -19,7 +19,7 @@ KWin stays the compositor, so XWayland apps (Krita drag and drop, games) keep wo
 | `local/bin/kwin-pidhelper`, `config/systemd/user/kwin-pidhelper.service` | Tiny parent-process lookup service used for window swallowing |
 | `local/share/plasma/plasmoids/org.denix.statusline` | Plain-text `cpu │ gpu │ ram │ net` bar widget |
 | `local/share/plasma/plasmoids/org.kde.windowtitle` | Window Title widget using the pixel font |
-| `local/share/applications`, `local/share/icons` | Scratchpad / ncmpcpp launchers, KDE glyph icon |
+| `local/share/applications`, `local/share/icons` | Scratchpad / rmpc launchers, KDE glyph icon |
 
 ## Install
 
@@ -125,10 +125,10 @@ git push
 |---|---|
 | Meta+T, Meta+Return | kitty |
 | Meta+A | Dropdown scratchpad terminal |
-| Meta+S | Dropdown ncmpcpp |
+| Meta+S | Dropdown rmpc (music) |
 | Meta+W / Meta+Shift+W | Firefox / Chromium |
 | Meta+D | Dolphin |
-| Meta+N | ncmpcpp |
+| Meta+N | rmpc |
 | Meta+R, Alt+Space | Vicinae |
 | Meta+Ctrl+N | Restore last minimized window |
 | Meta+F1 | Keybinding popup (Esc to close) |

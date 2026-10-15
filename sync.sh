@@ -5,7 +5,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 for f in kwinrc kwinrulesrc kglobalshortcutsrc plasma-org.kde.plasma.desktop-appletsrc \
          plasmashellrc plasmanotifyrc kdeglobals breezerc vicinae/settings.json \
-         systemd/user/kwin-pidhelper.service; do
+         systemd/user/kwin-pidhelper.service systemd/user/mpd.socket.d/localhost.conf mpd/mpd.conf; do
     mkdir -p "$(dirname "$REPO/config/$f")"
     cp "$HOME/.config/$f" "$REPO/config/$f"
 done
@@ -18,8 +18,8 @@ for d in kwin/scripts/cursorfollowsfocus kwin/scripts/awesomeextras kwin/scripts
 done
 
 cp "$HOME/.local/share/applications/kitty-scratchpad.desktop" \
-   "$HOME/.local/share/applications/kitty-scratchpad-music.desktop" \
-   "$HOME/.local/share/applications/ncmpcpp-kitty.desktop" "$REPO/local/share/applications/"
+   "$HOME/.local/share/applications/kitty-scratchpad-rmpc.desktop" \
+   "$HOME/.local/share/applications/rmpc-kitty.desktop" "$REPO/local/share/applications/"
 mkdir -p "$REPO/local/bin" && cp "$HOME/.local/bin/kwin-pidhelper" "$REPO/local/bin/"
 cp "$HOME/.local/share/icons/kde-glyph.png" "$REPO/local/share/icons/"
 

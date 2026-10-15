@@ -1,6 +1,6 @@
 var SCRATCHPADS = [
     { name: "Scratchpad", cls: "scratchpad", key: "Meta+A", launcher: "/component/kitty_scratchpad_desktop", w: 0.9, h: 0.4 },
-    { name: "MusicScratchpad", cls: "scratchpad-music", key: "Meta+S", launcher: "/component/kitty_scratchpad_music_desktop", w: 0.6, h: 0.5 }
+    { name: "MusicScratchpad", cls: "scratchpad-music", key: "Meta+S", launcher: "/component/kitty_scratchpad_rmpc_desktop", w: 0.6, h: 0.5 }
 ];
 var TERMINALS = ["kitty"];
 

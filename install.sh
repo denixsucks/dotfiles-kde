@@ -39,6 +39,7 @@ mkdir -p "$HOME/.local/bin"
 install -m 755 "$REPO/local/bin/kwin-pidhelper" "$HOME/.local/bin/kwin-pidhelper"
 systemctl --user daemon-reload
 systemctl --user enable --now kwin-pidhelper 2>/dev/null || true
+systemctl --user enable --now mpd.socket 2>/dev/null || true
 
 "$REPO/apply-features.sh" >/dev/null || true
 

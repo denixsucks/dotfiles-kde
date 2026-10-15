@@ -14,6 +14,13 @@ install_file() {
     sed "s#/home/denix#$HOME#g" "$src" > "$dst" 2>/dev/null || cp -a "$src" "$dst"
 }
 
+if pgrep -x kwin_wayland >/dev/null; then
+    echo "!!  KDE is running: it keeps shortcuts in memory and may write its own copy back over"
+    echo "!!  kglobalshortcutsrc. For shortcuts to stick, run this from a TTY (Ctrl+Alt+F3) before logging in."
+    echo "!!  Continuing in 5 seconds (Ctrl+C to stop)..."
+    sleep 5
+fi
+
 echo "==> Stopping plasmashell so it does not overwrite the panel config"
 systemctl --user stop plasma-plasmashell 2>/dev/null || true
 

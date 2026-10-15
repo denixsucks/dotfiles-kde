@@ -3,7 +3,6 @@ kwin6-bismuth-decoration-git
 kwin-effects-geometry-change
 plasma6-applets-window-title
 plasma6-applets-virtual-desktop-bar-wayland
-plasma6-applets-panel-colorizer
 ttf-terminus-nerd
 kitty
 dolphin
@@ -12,3 +11,6 @@ chromium
 rmpc
 mpd
 spectacle
+mpv
+python-dbus
+python-gobject

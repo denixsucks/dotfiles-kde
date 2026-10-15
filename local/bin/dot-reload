@@ -38,20 +38,28 @@ def effect(name, on):
         kwin("/Effects", "org.kde.kwin.Effects.unloadEffect", name)
 
 
+def number(f, key, default):
+    value = f.get(key, str(default)).strip()
+    if value.isdigit():
+        return value
+    print(f"{key}: '{value}' is not a whole number, using {default}", file=sys.stderr)
+    return str(default)
+
+
 def apply_features(f):
     on = lambda k, d="yes": f.get(k, d).strip().lower() in TRUE
-    gap = f.get("gaps", "6")
+    gap = number(f, "gaps", 6)
     for side in ("Left", "Right", "Top", "Bottom", "Between"):
         kw("kwinrc", "Script-krohnkite", f"screenGap{side}", gap)
     kw("kwinrc", "Script-krohnkite", "soleWindowNoGaps", str(on("smart_gaps")).lower())
-    kw("kwinrc", "Effect-diminactive", "Strength", f.get("dim_strength", "15"))
+    kw("kwinrc", "Effect-diminactive", "Strength", number(f, "dim_strength", 15))
     effect("diminactive", on("dim"))
-    kw("kwinrc", "Effect-hidecursor", "InactivityDuration", f.get("hide_cursor_after", "4"))
+    kw("kwinrc", "Effect-hidecursor", "InactivityDuration", number(f, "hide_cursor_after", 4))
     effect("hidecursor", on("hide_cursor"))
     effect("kwin4_effect_shapecorners", on("outlines"))
     effect("kwin4_effect_geometry_change", on("animations"))
     kw("kwinrc", "Windows", "FocusPolicy", "FocusFollowsMouse" if on("focus_follows_mouse") else "ClickToFocus")
-    kw("kwinrc", "Windows", "DelayFocusInterval", f.get("focus_delay", "250"))
+    kw("kwinrc", "Windows", "DelayFocusInterval", number(f, "focus_delay", 250))
     kw("kwinrc", "Plugins", "cursorfollowsfocusEnabled", str(on("cursor_follows_focus")).lower())
     for key, name in (("swallow", "swallow"), ("back_and_forth", "backAndForth"), ("no_minimize", "noMinimize")):
         kw("kwinrc", "Script-awesomeextras", name, str(on(key)).lower())
@@ -108,7 +116,7 @@ def reload_scripts():
 def main():
     if not os.path.exists(CONFIG):
         sys.exit(f"no config at {CONFIG}")
-    cp = configparser.ConfigParser(delimiters=("=",), interpolation=None)
+    cp = configparser.ConfigParser(delimiters=("=",), interpolation=None, inline_comment_prefixes=("#", ";"))
     cp.optionxform = str
     cp.read(CONFIG)
     apply_features(cp["features"] if cp.has_section("features") else {})

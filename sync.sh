@@ -23,4 +23,7 @@ cp "$HOME/.local/share/applications/kitty-scratchpad.desktop" \
 mkdir -p "$REPO/local/bin" && cp "$HOME/.local/bin/kwin-pidhelper" "$REPO/local/bin/"
 cp "$HOME/.local/share/icons/kde-glyph.png" "$REPO/local/share/icons/"
 
+sed -i '/^\[services\]\[obs-[^]]*\]$/,/^$/d' "$REPO/config/kglobalshortcutsrc"
+sed -i '/(OBS)/d' "$REPO/local/share/kwin/scripts/keyhelp/contents/ui/main.qml"
+
 git -C "$REPO" status --short
